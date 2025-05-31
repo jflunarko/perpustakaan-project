@@ -4,40 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Vault Login</title>
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS Local -->
+    <link href="<?= base_url('/css/tailwind.css') ?>" rel="stylesheet">
     
     <style>
-        :root {
-            --primary-bg: rgb(33, 51, 42);       /* Dark Green Background */
-            --primary-accent: #6B7A62;   /* Vault Green Accent */
-            --text-light: #D9C4A4;       /* Cream Text */
-            --button-hover: #4C5B47;     /* Dark Olive Hover */
+        .background-image {
+            background-image: url('<?= base_url("assets/staff-login.svg") ?>');
         }
-
-        body {
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-        }
-
-        .login-side {
-            width: 30%;
-            background: var(--primary-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .background-side {
-            width: 70%;
-            background: url('<?= base_url("assets/staff-login.svg") ?>') center/cover no-repeat;
-            position: relative;
-        }
-
-        .background-side::before {
+        
+        .background-overlay::before {
             content: '';
             position: absolute;
             top: 0;
@@ -46,146 +21,74 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.3);
         }
-
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-        }
-
-
-
-        .logo {
-            display: block;
-            margin: 0 auto 2rem;
-            max-width: 320px;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .sign-in-title {
-            color: white;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-
-        .form-control {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-light);
-            border-radius: 10px;
-        }
-
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-accent);
-            box-shadow: 0 0 0 0.2rem rgba(103, 125, 106, 0.25);
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-accent), var(--button-hover));
-            border: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--button-hover), var(--primary-accent));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(64, 83, 76, 0.3);
-        }
-
-        .btn-outline-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-light);
-            border-radius: 0 10px 10px 0;
-        }
-
-        .btn-outline-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-
-        .alert-danger {
-            background: rgba(220, 53, 69, 0.2);
-            border: 1px solid rgba(220, 53, 69, 0.3);
-            color: #f8d7da;
-            border-radius: 10px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-            
-            .login-side {
-                width: 100%;
-                height: 60vh;
-                order: 1;
-            }
-            
-            .background-side {
-                width: 100%;
-                height: 40vh;
-                order: 2;
-            }
-        }
     </style>
 </head>
-<body>
-    <div class="login-side">
-        <div class="login-container">
-             <?php if (session()->getFlashdata('error')): ?>
-                <div class="alert alert-danger text-center">
+<body class="m-0 h-screen overflow-hidden flex">
+    <!-- Login Side -->
+    <div class="w-full md:w-[30%] bg-primary-bg flex items-center justify-center p-8">
+        <div class="w-full max-w-md">
+            <!-- Error Alert -->
+            <?php if (session()->getFlashdata('error')): ?>
+                <div class="bg-red-900/20 border border-red-600/30 text-red-200 p-3 rounded-lg text-center mb-4">
                     <?= session()->getFlashdata('error') ?>
                 </div>
             <?php endif; ?>
             
-            <img src="<?= base_url(relativePath: 'assets/BookVault-Logo.png') ?>" alt="Book Vault Logo" class="logo">
-            <h3 class="sign-in-title">Please sign in</h3>
+            <!-- Logo -->
+            <img src="<?= base_url(relativePath: 'assets/BookVault-Logo.png') ?>" 
+                 alt="Book Vault Logo" 
+                 class="block mx-auto mb-8 max-w-80 h-auto rounded-lg">
+            
+            <!-- Title -->
+            <h3 class="text-white text-center mb-6 font-medium text-xl">Please sign in</h3>
 
-            <form method="post" action="/do-login">
-                <div class="mb-3">
+            <!-- Login Form -->
+            <form method="post" action="/staff/login" class="space-y-4">
+                <!-- Username Input -->
+                <div>
                     <input 
                         type="text" 
                         name="username" 
-                        class="form-control" 
+                        class="w-full bg-white/10 border border-white/20 text-text-light rounded-lg px-4 py-3 placeholder-white/70 focus:border-primary-accent focus:outline-none focus:ring-2 focus:ring-primary-accent/25 focus:bg-white/15 focus:text-white transition-all duration-200" 
                         placeholder="Username or Email" 
                         required>
                 </div>
 
-                <div class="mb-3">
-                    <div class="input-group">
+                <!-- Password Input Group -->
+                <div>
+                    <div class="relative flex">
                         <input 
                             type="password" 
                             name="password" 
-                            class="form-control" 
+                            class="w-full bg-white/10 border border-white/20 text-text-light rounded-l-lg px-4 py-3 placeholder-white/70 focus:border-primary-accent focus:outline-none focus:ring-2 focus:ring-primary-accent/25 focus:bg-white/15 focus:text-white transition-all duration-200" 
                             placeholder="Password" 
                             id="passwordInput" 
                             required>
                         <button 
                             type="button" 
-                            class="btn btn-outline-secondary" 
+                            class="bg-white/10 border border-white/20 border-l-0 text-text-light rounded-r-lg px-4 py-3 hover:bg-white/20 hover:border-white/30 hover:text-white transition-all duration-200" 
                             onclick="togglePassword()">👁️</button>
                     </div>
                 </div>
 
-                <button class="btn btn-primary w-100" type="submit">Sign in</button>
+                <!-- Submit Button -->
+                <button 
+                    class="w-full bg-gradient-to-br from-primary-accent to-button-hover text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:from-button-hover hover:to-primary-accent hover:-translate-y-0.5 hover:shadow-lg hover:shadow-button-hover/30" 
+                    type="submit">
+                    Sign in
+                </button>
             </form>
         </div>
     </div>
 
-    <div class="background-side">
+    <!-- Background Side -->
+    <div class="hidden md:block w-[70%] background-image bg-cover bg-center relative background-overlay">
         <!-- Background image will be displayed here -->
+    </div>
+
+    <!-- Mobile Responsive: Background for small screens -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 h-[40vh] background-image bg-cover bg-center background-overlay -z-10">
+        <!-- Background image for mobile -->
     </div>
 
     <!-- Toggle Password Script -->

@@ -35,13 +35,13 @@ class StaffAuth extends Controller
         $session->set([
             'uid'        => $userData['id'],
             'username'   => $userData['username'],
-            'isLoggedIn' => true,
+            'is_staff_logged_in' => true,
         ]);
 
-        return redirect()->to('/dashboard');
+        return redirect()->to('/staff/dashboard');
     } else {
         $session->setFlashdata('error', 'Username/Email atau password salah');
-        return redirect()->to('/login');
+        return redirect()->to('/staff/login');
     }
 }
 
