@@ -8,5 +8,13 @@ class BookCategoriesModel extends Model
 {
     protected $table = 'book_categories';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'created_at', 'updated_at'. 'deleted_at'];
+    protected $allowedFields = ['name'];
+
+    // Aktifkan fitur timestamps dan soft deletes
+    protected $useTimestamps = true;
+    protected $useSoftDeletes = true;
+
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
 }

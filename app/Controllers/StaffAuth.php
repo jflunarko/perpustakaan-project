@@ -25,12 +25,6 @@ class StaffAuth extends Controller
         ->orWhere('username', $loginInput)
         ->first();
 
-    if ($userData) {
-        log_message('debug', 'User ditemukan: ' . json_encode($userData));
-    } else {
-        log_message('debug', 'User tidak ditemukan');
-    }
-
     if ($userData && password_verify($inputPassword, $userData['password'])) {
         $session->set([
             'uid'        => $userData['id'],
