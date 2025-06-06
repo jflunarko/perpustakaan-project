@@ -10,7 +10,6 @@ class BookCategoriesModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = ['name'];
 
-    // Aktifkan fitur timestamps dan soft deletes
     protected $useTimestamps = true;
     protected $useSoftDeletes = true;
 

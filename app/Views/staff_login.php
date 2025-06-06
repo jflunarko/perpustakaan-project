@@ -35,7 +35,7 @@
             <?php endif; ?>
             
             <!-- Logo -->
-            <img src="<?= base_url(relativePath: 'assets/BookVault-Logo.png') ?>" 
+            <img src="<?= base_url(relativePath: 'assets/logo-vault-no-bg.png') ?>" 
                  alt="Book Vault Logo" 
                  class="block mx-auto mb-8 max-w-80 h-auto rounded-lg">
             

@@ -10,15 +10,25 @@ use CodeIgniter\Router\RouteCollection;
 // =============================================
 // PUBLIC ROUTES (gak perlu login)
 // =============================================
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Public\Library::index');
+$routes->get('home', 'Public\Library::index');
+$routes->get('catalog', 'Public\Library::catalog');
+$routes->get('about', 'Public\Library::about');
+$routes->get('contact', 'Public\Library::contact');
 
+
+$routes->group('member', function($routes) {
+    $routes->get('login', 'Member\MemberAuth::login');
+    $routes->post('login', 'Member\MemberAuth::doLogin');
+    $routes->get('logout', 'Member\MemberAuth::logout');
+});
 // =============================================
 // STAFF AUTHENTICATION ROUTES
 // =============================================
 $routes->group('staff', function($routes) {
-    $routes->get('login', 'StaffAuth::login');
-    $routes->post('login', 'StaffAuth::doLogin');
-    $routes->get('logout', 'StaffAuth::logout');
+    $routes->get('login', 'Staff\StaffAuth::login');
+    $routes->post('login', 'Staff\StaffAuth::doLogin');
+    $routes->get('logout', 'Staff\StaffAuth::logout');
 });
 
 // =============================================

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Staff;
 
 use App\Models\StaffModel;
 use CodeIgniter\Controller;
@@ -28,7 +28,7 @@ class StaffAuth extends Controller
     if ($userData && password_verify($inputPassword, $userData['password'])) {
         $session->set([
             'uid'        => $userData['id'],
-            'username'   => $userData['username'],
+            'staff-name'   => $userData['username'],
             'is_staff_logged_in' => true,
         ]);
 
