@@ -73,8 +73,7 @@
     </div>
 </section>
 
-
-        <!-- Stats Section -->
+<!-- Stats Section -->
 <section class="py-20 bg-primary text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -97,8 +96,6 @@
         </div>
     </div>
 </section>
-    </div>
-</section>
 
 <!-- Popular Books Section -->
 <section class="py-20 bg-gray-50">
@@ -108,35 +105,63 @@
                 Buku Populer
             </h2>
             <p class="text-xl text-gray-600">
-                Buku-buku yang paling banyak dibaca bulan ini
+                Buku-buku yang tersedia di perpustakaan kami
             </p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <?php for($i = 1; $i <= 4; $i++): ?>
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
-                <img src="<?= base_url('assets/images/book-' . $i . '.jpg') ?>" 
-                     alt="Book Cover" 
-                     class="w-full h-64 object-cover">
-                <div class="p-6">
-                    <h3 class="font-bold text-lg text-primary mb-2">Judul Buku <?= $i ?></h3>
-                    <p class="text-gray-600 mb-4">Penulis Buku <?= $i ?></p>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="text-yellow-400">
-                                <?php for($j = 0; $j < 5; $j++): ?>
-                                    <i class="fas fa-star"></i>
-                                <?php endfor; ?>
-                            </div>
-                            <span class="text-sm text-gray-600 ml-2">5.0</span>
+            <?php if (!empty($books)): ?>
+                <?php foreach ($books as $index => $book): ?>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-aos="fade-up" data-aos-delay="<?= ($index + 1) * 100 ?>">
+                    <div class="h-64 bg-gradient-to-br from-blue-100 to-green-100 flex items-center justify-center">
+                        <div class="text-center p-4">
+                            <i class="fas fa-book text-6xl text-primary mb-4"></i>
+                            <p class="text-sm text-gray-600">Cover Buku</p>
                         </div>
-                        <button class="text-green-600 hover:text-green-800 font-semibold">
-                            Baca
-                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-primary mb-2 truncate" title="<?= esc($book['title']) ?>">
+                            <?= esc($book['title']) ?>
+                        </h3>
+                        <p class="text-gray-600 mb-2 truncate" title="<?= esc($book['author']) ?>">
+                            <?= esc($book['author']) ?>
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">
+                            <?= esc($book['publisher']) ?> (<?= esc($book['year_published']) ?>)
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <span class="text-sm px-2 py-1 bg-<?= $book['status'] == 'available' ? 'green' : 'red' ?>-100 text-<?= $book['status'] == 'available' ? 'green' : 'red' ?>-800 rounded-full">
+                                    <?= $book['status'] == '1' ? 'Tersedia' : 'Dipinjam' ?>
+                                </span>
+                                <span class="text-sm text-gray-600 ml-2">
+                                    Stok: <?= esc($book['stock']) ?>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <?php if ($book['status'] == '1' && $book['stock'] > 0): ?>
+                                <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-semibold transition duration-300">
+                                    <i class="fas fa-book-reader mr-2"></i>
+                                    Pinjam
+                                </button>
+                            <?php else: ?>
+                                <button class="w-full bg-gray-400 text-white py-2 px-4 rounded-lg font-semibold cursor-not-allowed" disabled>
+                                    <i class="fas fa-ban mr-2"></i>
+                                    Tidak Tersedia
+                                </button>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php endfor; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-book-open text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-xl text-gray-500">Belum ada buku yang tersedia</p>
+                    <p class="text-gray-400">Silakan kembali lagi nanti</p>
+                </div>
+            <?php endif; ?>
         </div>
         
         <div class="text-center mt-12" data-aos="fade-up">

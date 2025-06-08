@@ -16,12 +16,32 @@ $routes->get('catalog', 'Public\Library::catalog');
 $routes->get('about', 'Public\Library::about');
 $routes->get('contact', 'Public\Library::contact');
 
+// =============================================
+// LOAN ROUTES (Public bisa akses, tapi cek login di controller)
+// =============================================
+$routes->get('/catalog', 'Public\Catalog::index');
 
+// Route untuk buku yang sedang dipinjam oleh member
+$routes->get('/catalog/borrowed', 'Public\Catalog::myBorrowedBooks');
+
+// Route untuk proses peminjaman (yang sudah ada)
+$routes->get('/loan/borrow/(:num)', 'Public\Loan::borrow/$1');
+$routes->post('/loan/process', 'Public\Loan::processLoan');
+$routes->post('/loan/return', 'Public\Loan::returnBook');
+
+// Route untuk riwayat peminjaman
+$routes->get('/member/loans', 'Public\Loan::myLoans');
+
+
+// =============================================
+// MEMBER AUTHENTICATION ROUTES  
+// =============================================
 $routes->group('member', function($routes) {
     $routes->get('login', 'Member\MemberAuth::login');
     $routes->post('login', 'Member\MemberAuth::doLogin');
     $routes->get('logout', 'Member\MemberAuth::logout');
 });
+
 // =============================================
 // STAFF AUTHENTICATION ROUTES
 // =============================================
@@ -45,14 +65,13 @@ $routes->group('staff', ['filter' => 'staff_auth'], function($routes) {
         $routes->post('delete/(:num)', 'BookCategories::delete/$1');
     });
     
-
-        $routes->group('book', function($routes) {
-            $routes->get('/', 'Staff\Book::index');
-        });
-        $routes->group('loan', function($routes) {
-            $routes->get('/', 'Staff\Loan::index');
-        });
-        $routes->group('member', function($routes) {
-            $routes->get('/', 'Staff\Member::index');
-        });
+    $routes->group('book', function($routes) {
+        $routes->get('/', 'Staff\Book::index');
     });
+    $routes->group('loan', function($routes) {
+        $routes->get('/', 'Staff\Loan::index');
+    });
+    $routes->group('member', function($routes) {
+        $routes->get('/', 'Staff\Member::index');
+    });
+});
