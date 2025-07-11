@@ -1,5 +1,5 @@
 <!-- app/Views/staff/components/side_bar.php -->
-<div class="w-64 h-screen shadow-lg p-4 bg-[rgb(33,51,42)]">
+<div class="w-64 h-screen shadow-lg p-4 bg-[rgb(33,51,42)] relative">
     <ul>
         <a href="<?= base_url('staff/dashboard') ?>" class="text-white"> Dashboard </a>
         <li class="mb-2 mt-3">
@@ -44,7 +44,17 @@
                     <span class="text-sm font-semibold text-gray-400">Member</span>
                 </div>
             </a>
+
+            
         </li>
-        <!-- More menu items -->
+        
     </ul>
+    <div class="absolute bottom-4 left-4 right-4">
+        <a href="<?= base_url('/staff/logout') ?>" class="flex items-center justify-center w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
+            </svg>
+            Logout
+        </a>
+    </div>
 </div>

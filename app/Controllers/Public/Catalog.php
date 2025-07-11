@@ -50,7 +50,7 @@ class Catalog extends BaseController
                                         ->join('books', 'books.id = loans.book_id')
                                         ->where('loans.member_id', $memberId)
                                         ->where('loans.return_date', null) // Belum dikembalikan
-                                        ->whereIn('loans.status', ['pending', 'approved', 'dipinjam'])
+                                        ->whereIn('loans.status', ['0', '1', '2'])
                                         ->findAll();
 
         $data = [

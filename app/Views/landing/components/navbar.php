@@ -20,14 +20,6 @@
                        class="text-gray-300 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out <?= (current_url() == site_url('catalog')) ? 'bg-green-700 text-white' : '' ?>">
                         Katalog
                     </a>
-                    <a href="<?= site_url('about') ?>" 
-                       class="text-gray-300 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out <?= (current_url() == site_url('about')) ? 'bg-green-700 text-white' : '' ?>">
-                        Tentang
-                    </a>
-                    <a href="<?= site_url('contact') ?>" 
-                       class="text-gray-300 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out <?= (current_url() == site_url('contact')) ? 'bg-green-700 text-white' : '' ?>">
-                        Kontak
-                    </a>
                 </div>
             </div>
 

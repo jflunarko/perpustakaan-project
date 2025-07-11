@@ -75,8 +75,8 @@
                                     <div class="flex justify-between">
                                         <span>Status:</span>
                                         <span class="font-medium 
-                                            <?= $userLoan['status'] == 'pending' ? 'text-yellow-600' : 
-                                               ($userLoan['status'] == 'dipinjam' ? 'text-green-600' : 'text-blue-600') ?>">
+                                            <?= $userLoan['status'] == '1' ? 'text-yellow-600' : 
+                                               ($userLoan['status'] == '2' ? 'text-green-600' : 'text-blue-600') ?>">
                                             <?= ucfirst($userLoan['status']) ?>
                                         </span>
                                     </div>
@@ -92,7 +92,7 @@
                             <h3 class="text-lg font-semibold text-gray-800 mb-3">Pengembalian Buku</h3>
                             
                             
-                            <?php if ($userLoan['status'] == 'dipinjam' ): ?>
+                            <?php if ($userLoan['status'] == '1' ): ?>
                                 <div class="bg-green-50 border border-green-200 rounded-md p-4 mb-4">
                                     <p class="text-green-800 mb-3">
                                         <i class="fas fa-check-circle mr-2"></i>

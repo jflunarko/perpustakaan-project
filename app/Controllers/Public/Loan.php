@@ -38,7 +38,7 @@ class Loan extends BaseController
             'book_id' => $bookId,
             'member_id' => $memberId,
             'return_date' => null // Belum dikembalikan
-        ])->whereIn('status', ['pending', 'approved', 'dipinjam'])->first();
+        ])->whereIn('status', ['1', '0', '2'])->first();
 
         // Selalu kirim data buku dan loan info
         $data = [
@@ -86,7 +86,7 @@ class Loan extends BaseController
             'book_id' => $bookId,
             'member_id' => $memberId,
             'return_date' => null // Belum dikembalikan
-        ])->whereIn('status', ['pending', 'dipinjam'])->first();
+        ])->whereIn('status', ['0', '1'])->first();
 
         if ($existingLoan) {
             return redirect()->back()->withInput()->with('error', 'Anda sudah meminjam buku ini dan belum mengembalikannya.');
@@ -105,7 +105,7 @@ class Loan extends BaseController
             'loan_date' => $loanDate,
             'due_date' => $dueDate,
             'return_date' => null,
-            'status' => 'pending' // Status awal pending, nanti bisa diubah staff
+            'status' => 0, // Status awal pending, nanti bisa diubah staff
         ];
 
         // Mulai transaction
@@ -168,7 +168,7 @@ class Loan extends BaseController
             'book_id' => $bookId,
             'member_id' => $memberId,
             'return_date' => null // Belum dikembalikan
-        ])->whereIn('status', ['dipinjam'])->first();
+        ])->whereIn('status', ['1'])->first();
 
         if (!$loan) {
             return redirect()->to('/catalog')->with('error', 'Data peminjaman tidak ditemukan atau tidak valid.');

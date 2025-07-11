@@ -6,10 +6,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold text-primary">
-                <?= $view_type === 'dipinjam' ? 'Buku yang Sedang Dipinjam' : 'Katalog Buku' ?>
+                <?= $view_type === '1' ? 'Buku yang Sedang Dipinjam' : 'Katalog Buku' ?>
             </h1>
             <p class="text-gray-600 text-lg mt-2">
-                <?= $view_type === 'dipinjam' ? 'Daftar buku yang sedang Anda pinjam' : 'Temukan buku favorit Anda di sini' ?>
+                <?= $view_type === '1' ? 'Daftar buku yang sedang Anda pinjam' : 'Temukan buku favorit Anda di sini' ?>
             </p>
         </div>
 
@@ -56,16 +56,16 @@
                         <p class="text-gray-600 truncate"><?= esc($book['author']) ?></p>
                         <p class="text-sm text-gray-500"><?= esc($book['publisher']) ?> (<?= esc($book['year_published']) ?>)</p>
                         
-                        <?php if ($view_type === 'dipinjam'): ?>
+                        <?php if ($view_type === '1'): ?>
                             <!-- Informasi khusus untuk buku yang sedang dipinjam -->
                             <div class="mt-3 space-y-2">
                                 <div class="flex justify-between items-center">
                                     <span class="text-sm text-gray-600">Status Pinjam:</span>
                                     <!-- Gunakan status dari tabel loans -->
                                     <span class="text-sm px-2 py-1 rounded-full 
-                                        <?= $book['status'] === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
-                                           ($book['status'] === 'approved' ? 'bg-blue-100 text-blue-800' : 
-                                           ($book['status'] === 'dipinjam' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800')) ?>">
+                                        <?= $book['status'] === '0' ? 'bg-yellow-100 text-yellow-800' : 
+                                           ($book['status'] === '1' ? 'bg-blue-100 text-blue-800' : 
+                                           ($book['status'] === '2' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800')) ?>">
                                         <?= ucfirst($book['status']) ?>
                                     </span>
                                 </div>
@@ -131,12 +131,12 @@
                 <div class="col-span-full text-center py-12">
                     <i class="fas fa-book-open text-5xl text-gray-300 mb-4"></i>
                     <p class="text-xl text-gray-500">
-                        <?= $view_type === 'dipinjam' ? 'Anda belum meminjam buku apapun' : 'Belum ada buku yang tersedia' ?>
+                        <?= $view_type === '1' ? 'Anda belum meminjam buku apapun' : 'Belum ada buku yang tersedia' ?>
                     </p>
                     <p class="text-gray-400">
-                        <?= $view_type === 'dipinjam' ? 'Silakan pinjam buku dari katalog' : 'Silakan cek kembali nanti' ?>
+                        <?= $view_type === '1' ? 'Silakan pinjam buku dari katalog' : 'Silakan cek kembali nanti' ?>
                     </p>
-                    <?php if ($view_type === 'dipinjam'): ?>
+                    <?php if ($view_type === '1'): ?>
                         <a href="/catalog" class="inline-block mt-4 bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-semibold transition duration-300">
                             <i class="fas fa-book mr-2"></i> Lihat Katalog
                         </a>
