@@ -60,20 +60,70 @@ class Loan extends BaseController
     }
 
     public function store()
-    {
+{
+    $id = $this->request->getPost('id');
+        $returnDate = $this->request->getPost('return_date');
+        $returnDate = $returnDate === '' ? null : $returnDate;
+    if ($id) {
+        $existingLoan = $this->loanModel->find($id);
+        $newStatus = $this->request->getPost('status');
+
+        if (!$existingLoan) {
+            return redirect()->to('/staff/loan')->with('message', 'Data peminjaman tidak ditemukan');
+        }
+
+        // 🚫 Tidak boleh ubah jika sudah dikembalikan
+        if ($existingLoan['status'] == '2') {
+            return redirect()->to('/staff/loan')->with('message', 'Status tidak dapat diubah karena buku sudah dikembalikan.');
+        }
+
+        // ✅ Kurangi stok jika dari Pending → Dipinjam
+        if ($existingLoan['status'] == '0' && $newStatus == '1') {
+            $this->bookModel
+                ->where('id', $existingLoan['book_id'])
+                ->set('stock', 'stock - 1', false)
+                ->update();
+        }
+
+        // ✅ Tambah stok jika diubah menjadi "Dikembalikan"
+        if ($newStatus == '2') {
+            $this->bookModel
+                ->where('id', $existingLoan['book_id'])
+                ->set('stock', 'stock + 1', false)
+                ->update();
+        }
+
+        $this->loanModel->update($id, [
+            'status' => $newStatus,
+            'return_date' => $returnDate,
+        ]);
+    } else {
+        // Create baru
+        $status = $this->request->getPost('status');
+        $bookId = $this->request->getPost('book_id');
+        // ✅ Kurangi stok langsung jika status peminjaman adalah "Dipinjam"
+        if ($status == '1') {
+            $this->bookModel
+                ->where('id', $bookId)
+                ->set('stock', 'stock - 1', false)
+                ->update();
+        }
+        
         $this->loanModel->save([
-            'id' => $this->request->getPost('id'),
-            'book_id' => $this->request->getPost('book_id'),
+            'book_id' => $bookId,
             'member_id' => $this->request->getPost('member_id'),
             'staff_id' => session()->get('staff_id'),
             'loan_date' => $this->request->getPost('loan_date'),
             'due_date' => $this->request->getPost('due_date'),
-            'return_date' => $this->request->getPost('return_date'),
-            'status' => $this->request->getPost('status'),
+            'return_date' => $returnDate,
+            'status' => $status,
         ]);
-
-        return redirect()->to('/staff/loan')->with('message', 'Data peminjaman berhasil disimpan');
     }
+
+    return redirect()->to('/staff/loan')->with('message', 'Data peminjaman berhasil disimpan');
+}
+
+
 
     public function edit($id)
     {

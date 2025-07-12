@@ -51,14 +51,35 @@
                             <td class="px-6 py-4"><?= esc($loan['loan_date']) ?></td>
                             <td class="px-6 py-4"><?= esc($loan['due_date']) ?></td>
                             <td class="px-6 py-4"><?= esc($loan['return_date'] ?? '-') ?></td>
-                            <td class="px-6 py-4 capitalize"><?= esc($loan['status']) ?></td>
+                            <td class="px-6 py-4 font-semibold">
+                                <?php
+                            switch ($loan['status']) {
+                                case '0':
+                                    echo '<span class="text-blue-400">Pending</span>';
+                                    break;
+                                case '1':
+                                    echo '<span class="text-yellow-400">Dipinjam</span>';
+                                    break;
+                                case '2':
+                                    echo '<span class="text-green-400">Dikembalikan</span>';
+                                    break;
+                                default:
+                                    echo '<span class="text-gray-400">Tidak Diketahui</span>';
+                                        }
+                                 ?>
+                            </td>                            
                             <td class="px-6 py-4">
-                                <a href="/staff/loan/edit/<?= $loan['id'] ?>" class="text-blue-400 hover:underline mr-3">Edit</a>
-                                <form action="/staff/loan/delete/<?= $loan['id'] ?>" method="post" class="inline" onsubmit="return confirm('Hapus data ini?')">
-                                    <?= csrf_field() ?>
-                                    <button type="submit" class="text-red-400 hover:underline">Hapus</button>
-                                </form>
-                            </td>
+    <?php if ($loan['status'] != '2'): ?>
+        <a href="/staff/loan/edit/<?= $loan['id'] ?>" class="text-blue-400 hover:underline mr-3">Edit</a>
+        <form action="/staff/loan/delete/<?= $loan['id'] ?>" method="post" class="inline" onsubmit="return confirm('Hapus data ini?')">
+            <?= csrf_field() ?>
+            <button type="submit" class="text-red-400 hover:underline">Hapus</button>
+        </form>
+    <?php else: ?>
+        <span class="text-white/40 italic">Sudah dikembalikan</span>
+    <?php endif; ?>
+</td>
+
                         </tr>
                     <?php endforeach ?>
                     <?php if (empty($loans)): ?>

@@ -38,7 +38,6 @@
                 id="userDropdownMenu" 
                 class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg hidden z-50"
             >
-                <a href="<?= site_url('member/dashboard') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                 <a href="<?= site_url('member/logout') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
             </div>
         </div>

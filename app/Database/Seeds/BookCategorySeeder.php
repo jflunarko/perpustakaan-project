@@ -8,9 +8,13 @@ class BookCategorySeeder extends Seeder
 {
     public function run()
     {
+        $now = date('Y-m-d H:i:s');
+
         $data = [
-            ['name' => 'Fiksi', 'created_at' => date('Y-m-d H:i:s')],
-            ['name' => 'Teknologi', 'created_at' => date('Y-m-d H:i:s')],
+            ['id' => 1, 'name' => 'Novel', 'created_at' => $now],
+            ['id' => 2, 'name' => 'Fantasi', 'created_at' => $now],
+            ['id' => 3, 'name' => 'Motivasi', 'created_at' => $now],
+            ['id' => 4, 'name' => 'Drama', 'created_at' => $now],
         ];
 
         $this->db->table('book_categories')->insertBatch($data);

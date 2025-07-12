@@ -40,6 +40,8 @@ $routes->group('member', function($routes) {
     $routes->get('login', 'Member\MemberAuth::login');
     $routes->post('login', 'Member\MemberAuth::doLogin');
     $routes->get('logout', 'Member\MemberAuth::logout');
+    $routes->get('register', 'Member\MemberAuth::register');
+    $routes->post('register', 'Member\MemberAuth::doRegister');
 });
 
 // =============================================

@@ -188,7 +188,7 @@ class Loan extends BaseController
             // Update data peminjaman - set return_date dan status
             $this->loanModel->update($loanId, [
                 'return_date' => date('Y-m-d H:i:s'),
-                'status' => 'dikembalikan'
+                'status' => '2'
             ]);
 
             // Update stok buku (tambah 1)

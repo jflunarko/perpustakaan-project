@@ -9,6 +9,7 @@
             </div>
             
             <div class="p-6">
+
                 <!-- Tampilkan pesan error/success -->
                 <?php if (session()->getFlashdata('error')): ?>
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -77,7 +78,18 @@
                                         <span class="font-medium 
                                             <?= $userLoan['status'] == '1' ? 'text-yellow-600' : 
                                                ($userLoan['status'] == '2' ? 'text-green-600' : 'text-blue-600') ?>">
-                                            <?= ucfirst($userLoan['status']) ?>
+                                            <?php
+                                                $status = $userLoan['status'];
+                                                if ($status == '0' || $status == 0) {
+                                                    echo 'Pending';
+                                                } elseif ($status == '1' || $status == 1) {
+                                                    echo 'Dipinjam';
+                                                } elseif ($status == '2' || $status == 2) {
+                                                    echo 'Dikembalikan';
+                                                } else {
+                                                    echo 'Tidak Diketahui (' . $status . ')';
+                                                }
+                                            ?>
                                         </span>
                                     </div>
                                 </div>
@@ -87,12 +99,18 @@
 
                     <!-- Form Peminjaman atau Pengembalian -->
                     <div>
-                        <?php if (isset($userLoan)): ?>
+                        <?php if (isset($userLoan) && $userLoan): ?>
                             <!-- Form Pengembalian -->
                             <h3 class="text-lg font-semibold text-gray-800 mb-3">Pengembalian Buku</h3>
                             
+                            <?php 
+                                $loanStatus = $userLoan['status'];
+                                $isActiveLoan = ($loanStatus == '1' || $loanStatus == 1);
+                                $isPending = ($loanStatus == '0' || $loanStatus == 0);
+                                $isReturned = ($loanStatus == '2' || $loanStatus == 2);
+                            ?>
                             
-                            <?php if ($userLoan['status'] == '1' ): ?>
+                            <?php if ($isActiveLoan): ?>
                                 <div class="bg-green-50 border border-green-200 rounded-md p-4 mb-4">
                                     <p class="text-green-800 mb-3">
                                         <i class="fas fa-check-circle mr-2"></i>
@@ -112,11 +130,25 @@
                                         </button>
                                     </form>
                                 </div>
-                            <?php else: ?>
+                            <?php elseif ($isPending): ?>
                                 <div class="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-4">
                                     <p class="text-yellow-800">
                                         <i class="fas fa-clock mr-2"></i>
                                         Permintaan peminjaman Anda sedang menunggu persetujuan staff.
+                                    </p>
+                                </div>
+                            <?php elseif ($isReturned): ?>
+                                <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-4">
+                                    <p class="text-blue-800">
+                                        <i class="fas fa-check-double mr-2"></i>
+                                        Buku ini sudah dikembalikan.
+                                    </p>
+                                </div>
+                            <?php else: ?>
+                                <div class="bg-red-50 border border-red-200 rounded-md p-4 mb-4">
+                                    <p class="text-red-800">
+                                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                                        Status peminjaman tidak dikenali: <?= $loanStatus ?>
                                     </p>
                                 </div>
                             <?php endif; ?>
